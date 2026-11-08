@@ -313,3 +313,8 @@ figcaption a { text-underline-offset: 3px; }
 /* Outline-style icons (Instagram) */
 .social svg.stroke { fill: none; stroke: currentColor; stroke-width: 1.8; }
 .social svg.stroke .dot { fill: currentColor; stroke: none; }
+
+/* Contact form: spam trap + sending states */
+.hp { position: absolute; left: -9999px; }
+.form-note.error { color: #9b2c2c; }
+.form button[disabled] { opacity: .6; cursor: wait; }

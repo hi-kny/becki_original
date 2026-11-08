@@ -19,20 +19,40 @@ document.querySelectorAll('[data-year]').forEach(function (el) {
   el.textContent = new Date().getFullYear();
 });
 
-// Contact form — VISUAL ONLY for now.
-// TODO: connect to a form service (e.g. Formspree or Netlify Forms) and remove this handler.
+// Contact form → Google Sheet (via the Apps Script web app in apps-script/Code.gs)
 (function () {
   var form = document.querySelector('#inquiry-form');
   if (!form) return;
   var note = document.querySelector('#form-note');
+  var button = form.querySelector('button[type="submit"]');
+  function say(text, isError) {
+    note.textContent = text;
+    note.classList.toggle('error', !!isError);
+    note.hidden = false;
+  }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.querySelector('input[name="services"]:checked')) {
-      note.textContent = 'Please select at least one service.';
-      note.hidden = false;
+      say('Please select at least one service.', true);
       return;
     }
-    note.textContent = 'Thank you! (This form is not connected yet, so nothing was sent.)';
-    note.hidden = false;
+    var endpoint = form.dataset.endpoint;
+    if (!endpoint || endpoint.indexOf('PASTE_') === 0) {
+      say('This form isn\u2019t connected yet. Please reach out on Instagram instead.', true);
+      return;
+    }
+    button.disabled = true;
+    say('Sending\u2026');
+    fetch(endpoint, { method: 'POST', body: new FormData(form) })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.result !== 'ok') throw new Error(data.error);
+        form.reset();
+        say('Thank you! Your inquiry is on its way. You\u2019ll hear back within 48 hours.');
+      })
+      .catch(function () {
+        say('Sorry, that didn\u2019t go through. Please try again in a moment.', true);
+      })
+      .then(function () { button.disabled = false; });
   });
 })();

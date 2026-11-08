@@ -64,7 +64,11 @@
         </div>
 
         <!-- VISUAL ONLY: not connected to any form service yet. See js/main.js -->
-        <form class="form" id="inquiry-form">
+        <!-- Submissions go to a Google Sheet through apps-script/Code.gs.
+             Replace PASTE_WEB_APP_URL with the script's /exec URL after deploying it. -->
+        <form class="form" id="inquiry-form" data-endpoint="PASTE_WEB_APP_URL">
+          <input type="hidden" name="form_id" value="multipage">
+          <p class="hp" aria-hidden="true"><label>Leave blank <input name="company-url" tabindex="-1" autocomplete="off"></label></p>
           <div class="field">
             <label for="subject">Subject <span class="req">(required)</span></label>
             <input type="text" id="subject" name="subject" required>
