@@ -15,7 +15,7 @@ Both repos contain an identical copy of `apps-script/Code.gs`. Deploy it once an
 
 1. Open the sheet and go to **Extensions → Apps Script**.
 2. Delete the sample code and paste in everything from [`apps-script/Code.gs`](../apps-script/Code.gs).
-3. Optional: set `NOTIFY_EMAIL` to Becki's address so she gets an email for each inquiry.
+3. Optional: set `NOTIFY_EMAIL` to Becky's address so she gets an email for each inquiry.
 4. Click **Save**.
 
 ## 2. Deploy it as a web app
